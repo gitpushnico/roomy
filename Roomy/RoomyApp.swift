@@ -161,10 +161,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         title.isEnabled = false
         menu.addItem(title)
 
-        let tagline = NSMenuItem(title: "Big Desk Energy", action: nil, keyEquivalent: "")
-        tagline.isEnabled = false
-        menu.addItem(tagline)
-
         menu.addItem(.separator())
 
         let restore = NSMenuItem(

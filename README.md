@@ -1,10 +1,8 @@
 # Roomy
 
-**Big Desk Energy** — even on a small MacBook.
+Temporary display scaling from the macOS menu bar. More workspace on a small MacBook, then back to normal when you quit.
 
-Roomy is a tiny free macOS menu bar app that temporarily changes your display scaling. Quit the app, and your screen goes back to whatever it was when Roomy launched.
-
-No accounts. No cloud. No paid plans.
+Roomy is free. No accounts. No cloud. No paid plans.
 
 ## How it works
 
@@ -43,7 +41,7 @@ swift Scripts/smoke_display.swift
 
 ## Menu
 
-- **Roomy** / **Big Desk Energy**
+- **Roomy**
 - **Restore original** — jump back to the snapshot without quitting
 - Scaled modes for the main display (Larger Text → More Space)
 - **Quit Roomy** — restore + exit
