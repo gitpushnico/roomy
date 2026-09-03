@@ -38,6 +38,19 @@ struct DisplayModeInfo: Identifiable, Hashable {
     }
 }
 
+enum DisplayModeSort {
+    /// Width first, then height. Equal-width variants like 1710×1068 vs 1710×1112
+    /// stay in order so the last HiDPI mode is the one with the most pixels.
+    static func byIncreasingSpace(_ lhs: DisplayModeInfo, _ rhs: DisplayModeInfo) -> Bool {
+        byIncreasingSpace(width: lhs.width, height: lhs.height, width: rhs.width, height: rhs.height)
+    }
+
+    static func byIncreasingSpace(width lhsWidth: Int, height lhsHeight: Int, width rhsWidth: Int, height rhsHeight: Int) -> Bool {
+        if lhsWidth != rhsWidth { return lhsWidth < rhsWidth }
+        return lhsHeight < rhsHeight
+    }
+}
+
 @MainActor
 final class DisplayController: ObservableObject {
     @Published private(set) var availableModes: [DisplayModeInfo] = []
@@ -65,7 +78,7 @@ final class DisplayController: ObservableObject {
             return mode.sizeLabel
         }
 
-        let hiDPI = availableModes.filter { $0.isHiDPI }.sorted { $0.width < $1.width }
+        let hiDPI = availableModes.filter { $0.isHiDPI }.sorted(by: DisplayModeSort.byIncreasingSpace)
         guard hiDPI.count > 1, let index = hiDPI.firstIndex(of: mode) else {
             return "Default — \(mode.sizeLabel)"
         }
@@ -159,10 +172,11 @@ final class DisplayController: ObservableObject {
             }
         }
 
-        // HiDPI modes first (sorted by width ascending), then native modes.
+        // HiDPI first, then native. Within each group: width, then height, so
+        // "Roomy" (last HiDPI) is the largest scaled mode, not a shorter sibling.
         return unique.values.sorted {
             if $0.isHiDPI != $1.isHiDPI { return $0.isHiDPI }
-            return $0.width < $1.width
+            return DisplayModeSort.byIncreasingSpace($0, $1)
         }
     }
 

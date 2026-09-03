@@ -2,15 +2,15 @@
 
 Temporary display scaling from the macOS menu bar. More workspace on a small MacBook, then back to normal when you quit.
 
-Roomy is free. No accounts. No cloud. No paid plans.
+Free. No accounts. No cloud. No paid plans.
 
 ## How it works
 
-1. Launch Roomy — it snapshots your current display mode.
-2. Pick a scale from the menu (e.g. **More Space**).
-3. Quit Roomy — it restores the snapshot.
+1. Launch Roomy. It remembers your current display size.
+2. Pick a larger size from the menu. The numbers depend on your display.
+3. Quit Roomy. The screen goes back to what it was at launch.
 
-If the app is force-quit and the temporary mode sticks, open Roomy again and click **Restore original**.
+If the app is force-quit and the size sticks, open Roomy again and click **Restore original**.
 
 ## Requirements
 
@@ -25,7 +25,7 @@ open Roomy.xcodeproj
 
 Select the **Roomy** scheme, then Run (⌘R). The app appears only in the menu bar (no Dock icon).
 
-Or from the terminal:
+From the terminal:
 
 ```bash
 xcodebuild -project Roomy.xcodeproj -scheme Roomy -configuration Debug \
@@ -33,7 +33,7 @@ xcodebuild -project Roomy.xcodeproj -scheme Roomy -configuration Debug \
 open build/DerivedData/Build/Products/Debug/Roomy.app
 ```
 
-Smoke-test display apply/restore (briefly changes your screen):
+Smoke-test apply/restore (briefly changes your screen):
 
 ```bash
 swift Scripts/smoke_display.swift
@@ -41,21 +41,20 @@ swift Scripts/smoke_display.swift
 
 ## Menu
 
-- **Roomy**
-- **Restore original** — jump back to the snapshot without quitting
-- Scaled HiDPI modes for the main display (Default and Roomy labeled, rest shown as resolution)
-- Beyond HiDPI: unscaled native modes (see below)
-- **Quit Roomy** — restore + exit
+- **Restore original** — jump back without quitting
+- Sizes for the main display. **Default** is the middle option; **Roomy** is the largest sharp (Retina) size. Everything else is just the resolution.
+- Below that: even larger sizes with smaller, less sharp text (see below)
+- **Quit Roomy** — restore and exit
 
-## HiDPI vs. native modes
+## Sharp sizes vs. extra space
 
-Scaled modes (Larger Text → More Space) use Retina rendering: crisp text at a logical resolution. These match what System Settings shows under "Looks like".
+The upper list uses Retina scaling: crisp text, like System Settings → Displays → “Looks like”.
 
-Native modes go beyond Roomy by running the display at its physical pixel count. You get more room, but text and UI elements are noticeably smaller and rendered at 1× density. They are listed separately in the menu under **More space, smaller text**.
+The lower list, **More space, smaller text**, runs the screen at its real pixel count. You get more room. Text and buttons get smaller and a bit less sharp.
 
 ## Privacy
 
-Session snapshots are stored only at:
+Session snapshots stay on this Mac only:
 
 `~/Library/Application Support/Roomy/session.json`
 

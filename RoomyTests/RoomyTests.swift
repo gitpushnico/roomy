@@ -53,3 +53,20 @@ final class StatusItemTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(item.menu?.items.count ?? 0, 5)
     }
 }
+
+final class DisplayModeSortTests: XCTestCase {
+    func testEqualWidthTallerModeSortsAfter() {
+        XCTAssertTrue(
+            DisplayModeSort.byIncreasingSpace(width: 1710, height: 1068, width: 1710, height: 1112)
+        )
+        XCTAssertFalse(
+            DisplayModeSort.byIncreasingSpace(width: 1710, height: 1112, width: 1710, height: 1068)
+        )
+    }
+
+    func testWiderModeSortsAfterRegardlessOfHeight() {
+        XCTAssertTrue(
+            DisplayModeSort.byIncreasingSpace(width: 1470, height: 956, width: 1710, height: 1068)
+        )
+    }
+}
