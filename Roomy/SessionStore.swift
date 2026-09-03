@@ -13,7 +13,10 @@ struct ModeSnapshot: Codable, Equatable {
 }
 
 enum SessionStore {
+    static var directoryOverride: URL?
+
     private static var directoryURL: URL {
+        if let directoryOverride { return directoryOverride }
         let base = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         return base.appendingPathComponent("Roomy", isDirectory: true)
     }

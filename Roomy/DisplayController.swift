@@ -74,11 +74,23 @@ final class DisplayController: ObservableObject {
     }
 
     func apply(_ mode: DisplayModeInfo) {
-        let result = CGDisplaySetDisplayMode(displayID, mode.mode, nil)
+        let result = applyMode(mode.mode)
         if result == .success {
-            currentMode = mode
+            refresh()
             hasUnrestoredSession = currentMode?.snapshot != originalSnapshot
         }
+    }
+
+    private func applyMode(_ mode: CGDisplayMode) -> CGError {
+        var config: CGDisplayConfigRef?
+        if CGBeginDisplayConfiguration(&config) == .success, let config {
+            CGConfigureDisplayWithDisplayMode(config, displayID, mode, nil)
+            let complete = CGCompleteDisplayConfiguration(config, .forSession)
+            if complete == .success {
+                return .success
+            }
+        }
+        return CGDisplaySetDisplayMode(displayID, mode, nil)
     }
 
     func restoreOriginal() {

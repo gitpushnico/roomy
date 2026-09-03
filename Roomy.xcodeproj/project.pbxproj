@@ -11,6 +11,7 @@
 		A10000000000000000000002 /* DisplayController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000012 /* DisplayController.swift */; };
 		A10000000000000000000003 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000013 /* SessionStore.swift */; };
 		A10000000000000000000004 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000014 /* Assets.xcassets */; };
+		A10000000000000000000082 /* RoomyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000081 /* RoomyTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,8 @@
 		A10000000000000000000012 /* DisplayController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayController.swift; sourceTree = "<group>"; };
 		A10000000000000000000013 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		A10000000000000000000014 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A10000000000000000000080 /* RoomyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RoomyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000081 /* RoomyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomyTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +39,7 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000031 /* Roomy */,
+				A10000000000000000000088 /* RoomyTests */,
 				A10000000000000000000032 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -55,11 +59,30 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000010 /* Roomy.app */,
+				A10000000000000000000080 /* RoomyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A10000000000000000000088 /* RoomyTests */ = {
+			isa = PBXGroup;
+			children = (
+				A10000000000000000000081 /* RoomyTests.swift */,
+			);
+			path = RoomyTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
+
+/* Begin PBXContainerItemProxy section */
+		A10000000000000000000089 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A10000000000000000000050 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A10000000000000000000040;
+			remoteInfo = Roomy;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXNativeTarget section */
 		A10000000000000000000040 /* Roomy */ = {
@@ -79,6 +102,22 @@
 			productReference = A10000000000000000000010 /* Roomy.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A10000000000000000000084 /* RoomyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A10000000000000000000087 /* Build configuration list for PBXNativeTarget "RoomyTests" */;
+			buildPhases = (
+				A10000000000000000000083 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A1000000000000000000008A /* PBXTargetDependency */,
+			);
+			name = RoomyTests;
+			productName = RoomyTests;
+			productReference = A10000000000000000000080 /* RoomyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -91,6 +130,10 @@
 				TargetAttributes = {
 					A10000000000000000000040 = {
 						CreatedOnToolsVersion = 16.3;
+					};
+					A10000000000000000000084 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = A10000000000000000000040;
 					};
 				};
 			};
@@ -108,6 +151,7 @@
 			projectRoot = "";
 			targets = (
 				A10000000000000000000040 /* Roomy */,
+				A10000000000000000000084 /* RoomyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -134,7 +178,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A10000000000000000000083 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A10000000000000000000082 /* RoomyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A1000000000000000000008A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A10000000000000000000040 /* Roomy */;
+			targetProxy = A10000000000000000000089 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A10000000000000000000061 /* Debug */ = {
@@ -226,6 +286,36 @@
 			};
 			name = Release;
 		};
+		A10000000000000000000085 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nicolaj.RoomyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Roomy.app/Contents/MacOS/Roomy";
+			};
+			name = Debug;
+		};
+		A10000000000000000000086 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.nicolaj.RoomyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Roomy.app/Contents/MacOS/Roomy";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -243,6 +333,15 @@
 			buildConfigurations = (
 				A10000000000000000000071 /* Debug */,
 				A10000000000000000000072 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A10000000000000000000087 /* Build configuration list for PBXNativeTarget "RoomyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A10000000000000000000085 /* Debug */,
+				A10000000000000000000086 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
