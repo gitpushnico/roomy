@@ -11,6 +11,10 @@ struct DisplayModeInfo: Identifiable, Hashable {
     let refreshRate: Double
     let mode: CGDisplayMode
 
+    /// True if the mode uses Retina (2× or better) rendering.
+    /// False = native 1:1 pixels — more space, but smaller and less crisp text.
+    var isHiDPI: Bool { pixelWidth >= width * 2 }
+
     var snapshot: ModeSnapshot {
         ModeSnapshot(
             width: width,
@@ -56,18 +60,20 @@ final class DisplayController: ObservableObject {
     }
 
     func label(for mode: DisplayModeInfo) -> String {
-        let sorted = availableModes.sorted { $0.width < $1.width }
-        guard sorted.count > 1, let index = sorted.firstIndex(of: mode) else {
+        // Native modes: just the resolution. The menu section header explains the tradeoff.
+        if !mode.isHiDPI {
+            return mode.sizeLabel
+        }
+
+        let hiDPI = availableModes.filter { $0.isHiDPI }.sorted { $0.width < $1.width }
+        guard hiDPI.count > 1, let index = hiDPI.firstIndex(of: mode) else {
             return "Default — \(mode.sizeLabel)"
         }
 
-        if index == 0 {
-            return "Larger Text — \(mode.sizeLabel)"
+        if index == hiDPI.count - 1 {
+            return "Roomy — \(mode.sizeLabel)"
         }
-        if index == sorted.count - 1 {
-            return "More Space — \(mode.sizeLabel)"
-        }
-        if index == sorted.count / 2 {
+        if index == hiDPI.count / 2 {
             return "Default — \(mode.sizeLabel)"
         }
         return mode.sizeLabel
@@ -144,14 +150,20 @@ final class DisplayController: ObservableObject {
         for mode in modeList {
             guard mode.isUsableForDesktopGUI() else { continue }
             let info = makeInfo(from: mode)
-            // Keep Retina-style scaled modes (matches System Settings “Looks like”).
-            guard info.pixelWidth >= info.width * 2 else { continue }
-            if unique[info.sizeLabel] == nil {
-                unique[info.sizeLabel] = info
+            // Keep both HiDPI (Retina) and native (1:1 pixel) modes.
+            // Use sizeLabel + HiDPI flag as the dedup key so a native and a HiDPI
+            // mode at the same logical size are both kept.
+            let key = "\(info.sizeLabel):\(info.isHiDPI)"
+            if unique[key] == nil {
+                unique[key] = info
             }
         }
 
-        return unique.values.sorted { $0.width < $1.width }
+        // HiDPI modes first (sorted by width ascending), then native modes.
+        return unique.values.sorted {
+            if $0.isHiDPI != $1.isHiDPI { return $0.isHiDPI }
+            return $0.width < $1.width
+        }
     }
 
     private func findMode(matching snapshot: ModeSnapshot) -> DisplayModeInfo? {

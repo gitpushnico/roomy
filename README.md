@@ -43,8 +43,15 @@ swift Scripts/smoke_display.swift
 
 - **Roomy**
 - **Restore original** — jump back to the snapshot without quitting
-- Scaled modes for the main display (Larger Text → More Space)
+- Scaled HiDPI modes for the main display (Default and Roomy labeled, rest shown as resolution)
+- Beyond HiDPI: unscaled native modes (see below)
 - **Quit Roomy** — restore + exit
+
+## HiDPI vs. native modes
+
+Scaled modes (Larger Text → More Space) use Retina rendering: crisp text at a logical resolution. These match what System Settings shows under "Looks like".
+
+Native modes go beyond Roomy by running the display at its physical pixel count. You get more room, but text and UI elements are noticeably smaller and rendered at 1× density. They are listed separately in the menu under **More space, smaller text**.
 
 ## Privacy
 

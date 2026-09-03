@@ -174,7 +174,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
 
         menu.addItem(.separator())
 
-        for mode in displayController.availableModes {
+        let hiDPIModes = displayController.availableModes.filter { $0.isHiDPI }
+        let nativeModes = displayController.availableModes.filter { !$0.isHiDPI }
+
+        for mode in hiDPIModes {
             let item = NSMenuItem(
                 title: displayController.label(for: mode),
                 action: #selector(applyMode(_:)),
@@ -184,6 +187,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
             item.representedObject = mode.id
             item.state = displayController.currentMode == mode ? .on : .off
             menu.addItem(item)
+        }
+
+        if !nativeModes.isEmpty {
+            menu.addItem(.separator())
+
+            let header = NSMenuItem(title: "More space, smaller text", action: nil, keyEquivalent: "")
+            header.isEnabled = false
+            menu.addItem(header)
+
+            for mode in nativeModes {
+                let item = NSMenuItem(
+                    title: displayController.label(for: mode),
+                    action: #selector(applyMode(_:)),
+                    keyEquivalent: ""
+                )
+                item.target = self
+                item.representedObject = mode.id
+                item.state = displayController.currentMode == mode ? .on : .off
+                menu.addItem(item)
+            }
         }
 
         menu.addItem(.separator())
