@@ -73,23 +73,7 @@ final class DisplayController: ObservableObject {
     }
 
     func label(for mode: DisplayModeInfo) -> String {
-        // Native modes: just the resolution. The menu section header explains the tradeoff.
-        if !mode.isHiDPI {
-            return mode.sizeLabel
-        }
-
-        let hiDPI = availableModes.filter { $0.isHiDPI }.sorted(by: DisplayModeSort.byIncreasingSpace)
-        guard hiDPI.count > 1, let index = hiDPI.firstIndex(of: mode) else {
-            return "Default — \(mode.sizeLabel)"
-        }
-
-        if index == hiDPI.count - 1 {
-            return "Roomy — \(mode.sizeLabel)"
-        }
-        if index == hiDPI.count / 2 {
-            return "Default — \(mode.sizeLabel)"
-        }
-        return mode.sizeLabel
+        mode.sizeLabel
     }
 
     func apply(_ mode: DisplayModeInfo) {
@@ -172,8 +156,7 @@ final class DisplayController: ObservableObject {
             }
         }
 
-        // HiDPI first, then native. Within each group: width, then height, so
-        // "Roomy" (last HiDPI) is the largest scaled mode, not a shorter sibling.
+        // HiDPI first, then native. Within each group: width, then height.
         return unique.values.sorted {
             if $0.isHiDPI != $1.isHiDPI { return $0.isHiDPI }
             return DisplayModeSort.byIncreasingSpace($0, $1)

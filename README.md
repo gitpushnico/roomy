@@ -42,7 +42,7 @@ swift Scripts/smoke_display.swift
 ## Menu
 
 - **Restore original** — jump back without quitting
-- Sizes for the main display. **Default** is the middle option; **Roomy** is the largest sharp (Retina) size. Everything else is just the resolution.
+- Sizes for the main display, shown as resolution
 - Below that: even larger sizes with smaller, less sharp text (see below)
 - **Quit Roomy** — restore and exit
 
